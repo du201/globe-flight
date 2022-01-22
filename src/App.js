@@ -1,58 +1,17 @@
-import logo from './logo.svg';
+import React, { Component, useState, useEffect } from 'react';
+import * as THREE from 'three'
+// import flights_sample from "./files/flights.json"
 import './App.css';
 import Globe from 'react-globe.gl';
-import React from 'react';
 import ReactDOM from 'react-dom';
 import * as d3 from 'd3';
 import indexBy from 'index-array-by';
 import { Input, AutoComplete } from 'antd';
 import 'antd/dist/antd.css';
-
-const { useState, useEffect, useRef } = React;
-
-
-const COUNTRY = 'Portugal';
-const MAP_CENTER = { lat: 37.6, lng: -16.6, altitude: 0.4 };
-const OPACITY = 0.3;
+import FlightGlobe from './components/FlightGlobe';
+import AirportCard from './components/AirportCard';
 
 const airportParse = ([airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source]) => ({ airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source });
-const routeParse = ([airline, airlineId, srcIata, srcAirportId, dstIata, dstAirportId, codeshare, stops, equipment]) => ({ airline, airlineId, srcIata, srcAirportId, dstIata, dstAirportId, codeshare, stops, equipment });
-
-
-function getRandomInt(max, min = 0) {
-  return Math.floor(Math.random() * (max - min + 1)) + min; // eslint-disable-line no-mixed-operators
-}
-
-const searchResult = (query) =>
-  new Array(getRandomInt(5))
-    .join('.')
-    .split('.')
-    .map((_, idx) => {
-      const category = `${query}${idx}`;
-      return {
-        value: category,
-        label: (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            <span>
-              Found {query} on{' '}
-              <a
-                href={`https://s.taobao.com/search?q=${query}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {category}
-              </a>
-            </span>
-            <span>{getRandomInt(200, 100)} results</span>
-          </div>
-        ),
-      };
-    });
 
 const Complete = ({ setSelectedAirport }) => {
   const [options, setOptions] = useState([{
@@ -111,18 +70,59 @@ const Complete = ({ setSelectedAirport }) => {
       }}
     >
       <Input.Search size="large" placeholder="search for airports" enterButton style={{}} onSearch={onSearch} loading={isLoading} />
-    </AutoComplete>
-  );
-};
+    </AutoComplete>)
+}
+
+
+const N = 10;
+const M = 20;
+const gData = [...Array(N).keys()].map(() => ({
+  lat: (Math.random() - 0.5) * 180,
+  lng: (Math.random() - 0.5) * 360,
+  size: Math.random() / 3,
+  color: [
+    '#FEE3EC',
+    '#F2789F'
+  ][Math.round(Math.random() * 1)],
+  label: ["Hello", 'world', 'im blue', 'im green'][Math.round(Math.random() * 3)],
+  emphasize: false
+}));
+
+// TODO Auto focus of airport?
+
+// Sample arc data
+const aData = [...Array(M).keys()].map(() => ({
+  startLat: (Math.random() - 0.5) * 180,
+  startLng: (Math.random() - 0.5) * 360,
+  endLat: (Math.random() - 0.5) * 180,
+  endLng: (Math.random() - 0.5) * 360,
+  height: Math.random() * 0.5,
+  label: ["Hello", 'world', 'im blue', 'im green'][Math.round(Math.random() * 3)],
+  color: ["#FFADAD", "#FFDAC7"][Math.round(Math.random() * 1)],
+  emphasize: false
+}));
 
 const App = () => {
-  const globeEl = useRef();
   const [airports, setAirports] = useState([]);
-  // const [routes, setRoutes] = useState([]);
-  const [hoverArc, setHoverArc] = useState();
-
-  const [selectedAirport, setSelectedAirport] = useState();
+  const [selectedAirport, setSelectedAirport] = useState(true);
   const [selectedFlight, setSelectedFlight] = useState();
+
+  const gGlobeMaterial = new THREE.MeshPhongMaterial();
+  gGlobeMaterial.color = new THREE.Color(0xB762C1);
+  const gAtmosphereColor = "#FFCDDD";
+  // TODO Handle windows resize
+  // TODO Limit zoom range to prevent moire pattern
+  // TODO Show space image on rotation?
+  // TODO resize
+  // TODO Country path boarder
+  // TODO Onhover, emphasize?
+
+  const [highlightArc, setHighlightArc] = useState();
+  const [highlightPoint, setHighlightPoint] = useState();
+
+  function addOpacity(color, opacity) {
+    return color + (Math.round(opacity * 255)).toString(16).padStart(2, '0');
+  }
 
   useEffect(() => {
     // load data
@@ -139,7 +139,13 @@ const App = () => {
 
   return <div>
     <Complete setSelectedAirport={setSelectedAirport}></Complete>
-    <div style={{ width: 300, height: 300, backgroundColor: 'blue', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none' }}></div>
+    <FlightGlobe
+      airportData={gData}
+      flightsData={aData}
+    >
+    </FlightGlobe>
+    <AirportCard style={{ backgroundColor: 'white', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none', fontSize: '10px', flexShrink: 2 }} />
+    {/* <div style={{ width: 300, height: 300, backgroundColor: 'blue', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none' }}></div> */}
     <div style={{ width: 300, height: 300, backgroundColor: 'green', position: 'fixed', bottom: 30, right: 30 }}></div>
   </div>;
 };
