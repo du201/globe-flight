@@ -9,19 +9,17 @@ import countries from "../files/globe-data-min.json";
 // import FlightCard from './components/FlightCard';
 
 function FlightGlobe(props) {
+  // TODO Specify props field?
+  // TODO Enum the color?
   const gGlobeMaterial = new THREE.MeshPhongMaterial();
   gGlobeMaterial.color = new THREE.Color( 0xB762C1 );
   const gAtmosphereColor = "#FFCDDD";
-  // TODO Handle windows resize
   // TODO Limit zoom range to prevent moire pattern
-  // TODO Show space image on rotation?
-  // TODO resize
+  // TODO Show space image on rotation?gi
   // TODO Country path boarder
-  // TODO Onhover, emphasize?
 
   const [highlightArc, setHighlightArc] = useState();
   const [highlightPoint, setHighlightPoint] = useState();
-
 
   function addOpacity(color, opacity) {
     return color + (Math.round(opacity * 255)).toString(16).padStart(2, '0');
@@ -50,13 +48,14 @@ function FlightGlobe(props) {
           return !highlightPoint ? 0.5 : e === highlightPoint ? 1 : 0.5;
         }}
         pointResolution={20}
+        pointLabel={(e) => {
+          return `<p class="Globe-Label">${e.label}</p>`;
+        }}
         onPointClick={(e) => {
           setHighlightPoint(e);
           // TODO Set upper component selected airport, need a callback here
         }}
 
-        // ? Can show airport info? or sat info
-        // onPointHover
         showGraticules={true}
         hexPolygonsData={countries.features}
         hexPolygonColor={() => '#FFBCD1'}
@@ -82,7 +81,7 @@ function FlightGlobe(props) {
         arcDashGap={0.25}
         arcDashAnimateTime={2000}
         arcLabel={(e) => {
-          return e.label;
+          return `<p class="Globe-Label">${e.label}</p>`;
         }}
         arcsTransitionDuration={1000}
         onArcClick={(e) => {

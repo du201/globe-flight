@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+.Globe-Label {
+  color: #270082;
+  font-size: 1.5rem;
+}
