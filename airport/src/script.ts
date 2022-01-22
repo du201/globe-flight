@@ -11,7 +11,7 @@ class Demo extends React.Component {
     return (
       <div>
       <Title level={2}>Chicago (ORD)</Title>
-        <Row gutter={16}>
+        <Row gutter={16}/>
       <Col span={12}>
         <Card>
           <Statistic
