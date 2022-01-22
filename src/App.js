@@ -1,12 +1,13 @@
 import logo from './logo.svg';
+import * as THREE from 'three'
 import countries from "./files/globe-data.json";
+import flights_sample from "./files/flights.json"
 import './App.css';
 import Globe from 'react-globe.gl';
-import * as THREE from 'three'
 
 function App() {
-  const N = 300;
-  const M = 20;
+  const N = 20;
+  const M = 50;
   const gData = [...Array(N).keys()].map(() => ({
     lat: (Math.random() - 0.5) * 180,
     lng: (Math.random() - 0.5) * 360,
@@ -19,6 +20,7 @@ function App() {
     label: ["Hello", 'world', 'im blue', 'im green'][Math.round(Math.random() * 3)]
   }));
   
+  // TODO Auto focus of airport?
 
   // Sample arc data
   const aData = [...Array(M).keys()].map(() => ({
@@ -67,9 +69,13 @@ function App() {
 
         // Arcs
         arcsData={aData}
-        arcColor={() => {return ["#E8751A", "#C51350"][Math.round(Math.random() * 1)];}}
+        arcColor={() => {return ["#FFADAD", "#FFDAC7"][Math.round(Math.random() * 1)];}}
         arcAltitude='height'
         arcStroke={0.75}
+        arcDashLength={1}
+        arcDashGap={1}
+        arcDashAnimateTime={1000}
+        arcsTransitionDuration={1000}
       />
     </div>
   );
