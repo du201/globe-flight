@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react';
-import { withSize } from 'react-sizeme'
+import React, { Component, useState, useEffect } from 'react';
+import { withSize, sizeMe } from 'react-sizeme'
 import * as THREE from 'three'
 // import countries from "./files/globe-data-min.json";
 // import flights_sample from "./files/flights.json"
@@ -22,6 +22,7 @@ function FlightGlobe(props) {
   const [highlightArc, setHighlightArc] = useState();
   const [highlightPoint, setHighlightPoint] = useState();
 
+
   function addOpacity(color, opacity) {
     return color + (Math.round(opacity * 255)).toString(16).padStart(2, '0');
   }
@@ -30,6 +31,8 @@ function FlightGlobe(props) {
     <div className="App">
       <Globe
         // globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+        width={props.size.width}
+        // height={Math.round(props.size.height) <= 0 ? props.size.width : props.size.height}
         backgroundColor="#7A0BC0"
         atmosphereColor={gAtmosphereColor}
         globeMaterial={gGlobeMaterial}
@@ -90,4 +93,4 @@ function FlightGlobe(props) {
   );
 }
 
-export default withSize()(FlightGlobe);
+export default withSize({ monitorHeight:true })(FlightGlobe);

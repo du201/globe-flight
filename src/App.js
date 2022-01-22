@@ -34,23 +34,6 @@ const aData = [...Array(M).keys()].map(() => ({
 
 
 function App() {
-  const gGlobeMaterial = new THREE.MeshPhongMaterial();
-  gGlobeMaterial.color = new THREE.Color( 0xB762C1 );
-  const gAtmosphereColor = "#FFCDDD";
-  // TODO Handle windows resize
-  // TODO Limit zoom range to prevent moire pattern
-  // TODO Show space image on rotation?
-  // TODO resize
-  // TODO Country path boarder
-  // TODO Onhover, emphasize?
-
-  const [highlightArc, setHighlightArc] = useState();
-  const [highlightPoint, setHighlightPoint] = useState();
-
-  function addOpacity(color, opacity) {
-    return color + (Math.round(opacity * 255)).toString(16).padStart(2, '0');
-  }
-
   return (
     <div className="App">
       <FlightGlobe
