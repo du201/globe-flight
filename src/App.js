@@ -6,6 +6,8 @@ import FlightGlobe from './components/FlightGlobe';
 import AirportCard from './components/AirportCard';
 import FlightCard from './components/FlightCard';
 import SearchBox from './components/SearchBox';
+import { getWeather } from './functions/weather';
+import { notification } from 'antd';
 
 const airportParse = ([airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source]) => ({ airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source });
 
@@ -39,9 +41,10 @@ const aData = [...Array(M).keys()].map(() => ({
 
 const App = () => {
   const [airports, setAirports] = useState([]); // [{...}], an array of all the airports
-  const [selectedAirport, setSelectedAirport] = useState(null); // the airportId
+  const [selectedAirport, setSelectedAirport] = useState(null); // the IATA
   const [selectedFlight, setSelectedFlight] = useState(null); // todo: decide what to use to represent an unique flight
   const [searchBoxIsLoading, setSearchBoxIsLoading] = useState(false); // boolean
+  const [selectedAirportData, setSelectedAirportData] = useState(null); // {...}, the data for the currently selected airport from APIs
 
   useEffect(() => {
     // load data
@@ -56,24 +59,43 @@ const App = () => {
 
   // airportObj: the {...} for the airport
   let onClickAirport = (airportObj) => {
-    console.log(airportObj);
-    callAirportAPI(airportObj.iata);
-    // todo:
-    //setSelectedAirport();
+    callAirportAPI(airportObj.iata).then(result => {
+      setSelectedAirportData(result);
+      setSelectedAirport(airportObj.iata);
+    }).catch(error => {
+      notification.open({
+        message: 'Retrieving Airport Info Failed',
+        duration: 3,
+        description:
+          'Due to internet issue, retrieving airport info failed. Please try again.'
+      });
+    });
   }
 
   // IATA: the three char string
   let onSearchAirport = (IATA) => {
-    callAirportAPI(IATA);
-    // todo:
-
-    setSearchBoxIsLoading(false);
-    //setSelectedAirport();
+    setSearchBoxIsLoading(true);
+    callAirportAPI(IATA).then(result => {
+      setSelectedAirportData(result);
+      setSelectedAirport(IATA);
+      setSearchBoxIsLoading(false);
+    }).catch(error => {
+      notification.open({
+        message: 'Retrieving Airport Info Failed',
+        duration: 3,
+        description:
+          'Due to internet issue, retrieving airport info failed. Please try again.'
+      });
+      setSearchBoxIsLoading(false);
+    });
   }
 
   // todo: the API calling function for airport
-  let callAirportAPI = (IATA) => {
-
+  let callAirportAPI = async (IATA) => {
+    let lat = 33.44
+    let lon = -94.04
+    let API_key = "8eecd0fb86128334073e887977445e60"
+    await getWeather(lat, lon, API_key);
   }
 
   return <div>
