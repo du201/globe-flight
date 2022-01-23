@@ -8,7 +8,9 @@ function AirportCard({ style, selectedAirportData }) {
     // todo:  update the time with real time value if have time
     return (
         <div style={style}>
-            <div style={{ fontSize: "30px" }}>{selectedAirportData.name}</div>
+            <div style={{ 
+                fontSize: "30px"
+            }}>{selectedAirportData.name}</div>
             <Row gutter={16}>
                 <Col span={12}>
                     <Card size="small" style={{ backgroundColor: "rgba(0,0,0,0)" }} bordered={false}>
