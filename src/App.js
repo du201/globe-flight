@@ -42,7 +42,19 @@ const App = () => {
   const [airports, setAirports] = useState([]); // [{...}], an array of all the airports
   // In iata
   const [selectedAirport, setSelectedAirport] = useState(null); // the airportId
-  const [selectedFlight, setSelectedFlight] = useState(null); // todo: decide what to use to represent an unique flight
+  const [selectedFlight, setSelectedFlight] = useState({
+    name: 'FedEx',
+    flight_iata: 'FX12',
+    dep_airport: 'Kansai International',
+    dep_iata: 'KIX',
+    arr_airport: 'Indianapolis International',
+    arr_iata: 'IND',
+    delay: 14,
+    arr_time: '2022-01-23T00:26:00+00:00',
+    dep_time: '2022-01-23T02:30:00+00:00',
+    arr_location: ['40', '40'],
+    dep_location: ['60', '60'],
+  }); // todo: decide what to use to represent an unique flight
   const [searchBoxIsLoading, setSearchBoxIsLoading] = useState(false); // boolean
   const [selectedAirportData, setSelectedAirportData] = useState({ name: "ORD", temperature: "70", humidity: "60", wind: "50", forecast: "wind" }); // {...}, the data for the currently selected airport from APIs
 
@@ -156,10 +168,10 @@ const App = () => {
     </FlightGlobe>
     <AirportCard
       selectedAirportData={selectedAirportData}
-      style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none', color: "#270082"}} />
+      style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none', color: "#270082" }} />
     <FlightCard
-      selectedAirportData={selectedAirportData}
-      style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, right: 30, display: selectedFlight ? 'block' : 'none', color: "#270082"}} />
+      selectedFlightData={selectedFlight}
+      style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, right: 30, display: selectedFlight ? 'block' : 'none', color: "#270082" }} />
   </div>;
 };
 
