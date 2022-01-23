@@ -13,14 +13,14 @@ import AirportCard from './components/AirportCard';
 
 const airportParse = ([airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source]) => ({ airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source });
 
-const Complete = ({ setSelectedAirport }) => {
-  const [options, setOptions] = useState([{
-    value: "IND",
-  }, {
-    value: "ORD",
-  }, {
-    value: "NYC",
-  }]);
+const Complete = ({ setSelectedAirport, airports }) => {
+  // const [options, setOptions] = useState([{
+  //   value: "IND",
+  // }, {
+  //   value: "ORD",
+  // }, {
+  //   value: "NYC",
+  // }]);
   const [isLoading, setIsLoading] = useState(false);
 
   const onSearch = (value) => {
@@ -48,6 +48,9 @@ const Complete = ({ setSelectedAirport }) => {
 
   }
 
+  let iataList = airports.length == 0 ? ['Loading...'] : airports.map(airport => airport.iata);
+  console.log(iataList);
+
   return (
     // <AutoComplete
     //   dropdownMatchSelectWidth={252}
@@ -63,7 +66,7 @@ const Complete = ({ setSelectedAirport }) => {
     // </AutoComplete>
 
     <AutoComplete
-      options={options}
+      options={[]}
       style={{
         position: 'fixed', top: 30, zIndex: 10, left: '50%',
         transform: 'translateX(-50%)', width: '30%'
@@ -121,13 +124,13 @@ const App = () => {
   }, []);
 
   return <div>
-    <Complete setSelectedAirport={setSelectedAirport}></Complete>
+    <Complete setSelectedAirport={setSelectedAirport} airports={airports}></Complete>
     <FlightGlobe
       airportData={gData}
       flightsData={aData}
     >
     </FlightGlobe>
-    <AirportCard style={{ backgroundColor: 'white', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none', fontSize: '10px', flexShrink: 2 }} />
+    <AirportCard style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none', fontSize: '10px' }} />
     {/* <div style={{ width: 300, height: 300, backgroundColor: 'blue', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none' }}></div> */}
     <div style={{ width: 300, height: 300, backgroundColor: 'green', position: 'fixed', bottom: 30, right: 30 }}></div>
   </div>;
