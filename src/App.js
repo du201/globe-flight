@@ -4,6 +4,7 @@ import * as d3 from 'd3';
 import 'antd/dist/antd.css';
 import FlightGlobe from './components/FlightGlobe';
 import AirportCard from './components/AirportCard';
+import FlightCard from './components/FlightCard';
 import SearchBox from './components/SearchBox';
 
 const airportParse = ([airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source]) => ({ airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source });
@@ -39,7 +40,7 @@ const aData = [...Array(M).keys()].map(() => ({
 const App = () => {
   const [airports, setAirports] = useState([]); // [{...}], an array of all the airports
   const [selectedAirport, setSelectedAirport] = useState(null); // the airportId
-  const [selectedFlight, setSelectedFlight] = useState(); // todo: decide what to use to represent an unique flight
+  const [selectedFlight, setSelectedFlight] = useState(null); // todo: decide what to use to represent an unique flight
   const [searchBoxIsLoading, setSearchBoxIsLoading] = useState(false); // boolean
 
   useEffect(() => {
@@ -89,8 +90,8 @@ const App = () => {
       setSelectedAirport={onClickAirport}
     >
     </FlightGlobe>
-    <AirportCard style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none', fontSize: '10px' }} />
-    <div style={{ width: 300, height: 300, backgroundColor: 'green', position: 'fixed', bottom: 30, right: 30 }}></div>
+    <AirportCard style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none' }} />
+    <FlightCard style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, right: 30, display: selectedFlight ? 'block' : 'none' }} />
   </div>;
 };
 
