@@ -22,8 +22,6 @@ const gData = [...Array(N).keys()].map(() => ({
   emphasize: false
 }));
 
-// TODO Auto focus of airport?
-
 // Sample arc data
 const aData = [...Array(M).keys()].map(() => ({
   startLat: (Math.random() - 0.5) * 180,
