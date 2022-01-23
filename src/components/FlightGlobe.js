@@ -15,6 +15,7 @@ function FlightGlobe(props) {
   const gGlobeMaterial = new THREE.MeshPhongMaterial();
   gGlobeMaterial.color = new THREE.Color( props.colorTheme.sphereColor );
   // TODO Limit zoom range to prevent moire pattern
+  // TODO Realistic lighting
   // TODO Show space image on rotation?gi
   // TODO Country path boarder
   // TODO Switch planet texture
@@ -28,8 +29,9 @@ function FlightGlobe(props) {
   });
 
   useEffect(() => {
+    console.log(pov);
     globeEl.current.pointOfView(pov, 1000);
-  });
+  }, [pov]);
 
   function addOpacity(color, opacity) {
     return color + (Math.round(opacity * 255)).toString(16).padStart(2, '0');
@@ -44,14 +46,12 @@ function FlightGlobe(props) {
         // height={Math.round(props.size.height) <= 0 ? props.size.width : props.size.height}
         backgroundColor={props.colorTheme.backgroundColor}
 
-        // Camera control
-
         // Sphere and atmosphere control
         atmosphereColor={props.colorTheme.atmosphereColor}
         globeMaterial={gGlobeMaterial}
         atmosphereAltitude={0.25}
 
-
+        // Airport control
         pointsData={props.airportData}
         // Todo, change altitude based on the traffic count?
         pointLat={props.airportLat}
@@ -79,13 +79,13 @@ function FlightGlobe(props) {
           return `<p class="Globe-Label" style="color:${props.colorTheme.labelColor}">${label}</p>`;
         }}
         onPointClick={(e) => {
-          console.log(e);
-          setHighlightPoint(e);
+          // console.log(e);
           setPov({
             lat: (e.lat - 20) % 90,
             lng: (e.lng + 20) % 180,
             altitude: 2.5
-          })
+          });
+          setHighlightPoint(e);
           props.setSelectedAirport(e);
         }}
 
@@ -122,13 +122,26 @@ function FlightGlobe(props) {
         }}
         arcsTransitionDuration={1000}
         onArcClick={(e) => {
-          setHighlightArc(e);
           console.log(e);
+
+          // let meanLng;
+          // if (0 <= e.startLng && e.startLng <= 180 && e.endLng <= 0 && e.endLng >= -180) {
+          //   let endLng = 180 + e.endLng;
+          //   meanLng = (e.startLng + endLng)/2;
+          //   meanLng = meanLng > 180 ? meanLng - 360 : meanLng;
+          // } else if (0 <= e.endLng && e.endLng <= 180 && e.startLng <= 0 && e.startLng >= -180) {
+          //   let startLng = 180 + e.startLng;
+          //   meanLng = (startLng + e.endLng)/2;
+          //   meanLng = meanLng > 180 ? meanLng - 360 : meanLng;
+          // } else {
+          //   meanLng = ((e.startLng + e.endLng)/2) % 180;
+          // }
           setPov({
-            lat: ((e.startLat + e.endLat)/2 - 5) % 90,
-            lng: ((e.startLng + e.endLng)/2 - 5) % 180,
+            lat: (((e.startLat + e.endLat)/3) - (Math.random() * 5 + 5)) % 90,
+            lng: (e.startLng + Math.random() * 10),
             altitude: 2.5
-          })
+          });
+          setHighlightArc(e);
           props.setSelectedAirport(e);
         }}
       />
@@ -172,7 +185,7 @@ FlightGlobe.defaultProps = {
   flightDepartureLng: 'startLng',
   flightArrivalLat: 'endLat',
   flightArrivalLng: 'endLng',
-  flightAltitude: 'height',
+  flightAltitude: null,
   colorTheme: {
     backgroundColor: "#7A0BC0",
     sphereColor: "#B762C1",
