@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 const { Title, Text } = Typography;
 
-function AirportCard(props) {
+function AirportCard({ style, selectedAirportData }) {
 
-    // todo:  fix the style of this card
+    // todo:  update the time with real time value if have time
     return (
-        <div style={props.style}>
-            <div style={{ fontSize: "30px" }}>Chicago (ORD)</div>
+        <div style={style}>
+            <div style={{ fontSize: "30px" }}>{selectedAirportData.name}</div>
             <Row gutter={16}>
                 <Col span={12}>
                     <Card size="small" style={{ backgroundColor: "rgba(0,0,0,0)" }} bordered={false}>
@@ -36,27 +36,27 @@ function AirportCard(props) {
             </p>
             <p>
                 <Text strong>Temperature: </Text>
-                <Text>31</Text>
+                <Text>{selectedAirportData.temperature}</Text>
             </p>
             <p>
                 <Text strong>Relative Humidity: </Text>
-                <Text>56%</Text>
+                <Text>{selectedAirportData.humidity}%</Text>
             </p>
             <p>
                 <Text strong>Wind: </Text>
-                <Text>18 mph</Text>
+                <Text>{selectedAirportData.wind} mph</Text>
             </p>
             <p>
                 <Text strong>Forecast: </Text>
-                <Text>Few Clouds</Text>
+                <Text>{selectedAirportData.forecast}</Text>
             </p>
             <br />
             <Row gutter={16}>
                 <Col span={8}>
-                    <Statistic title="Time" value="1:38:17 pm" suffix="CST" valueStyle={{ fontSize: '15px' }} />
+                    <Statistic title="Time" value={new Date().toLocaleTimeString('en-US')} suffix="CST" valueStyle={{ fontSize: '15px' }} />
                 </Col>
                 <Col span={8}>
-                    <Statistic title="Day" value="Saturday" valueStyle={{ fontSize: '15px' }} />
+                    <Statistic title="Day" value={new Date().date()} valueStyle={{ fontSize: '15px' }} />
                 </Col>
                 <Col span={8}>
                     <Statistic title="Date" value="January 22, 2022" valueStyle={{ fontSize: '15px' }} />

@@ -3,7 +3,7 @@ import { Card, Popover, Button, Row, Col, Typography } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
 const { Text } = Typography;
 
-function FlightCard(props) {
+function FlightCard({ style, selectedAirportData }) {
     // name: flight number
     // departure
     // arrival
@@ -13,7 +13,7 @@ function FlightCard(props) {
     // departure place current time
     // arrival place current time
     return (
-        <div style={props.style}>
+        <div style={style}>
             <Card title="United Airlines (UA149)" style={{ backgroundColor: "rgba(0,0,0,0)" }} bordered={false}>
                 <p>
                     <Text strong>ORD &#8594; LAX</Text>

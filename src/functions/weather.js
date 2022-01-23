@@ -6,7 +6,6 @@ let API_key = "d0aee958d23d1df2f26c843b0226be14"
 export default async function getWeather(lat, lon, API_key) {
     const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={minutely,hourly,daily,alerts}&units=imperial&appid=${API_key}`);
     const data = await response.json()
-    console.log(data);
     var json = {
         temperature: data.current.temp,
         humidity: data.current.humidity,
