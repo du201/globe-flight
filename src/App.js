@@ -7,6 +7,7 @@ import AirportCard from './components/AirportCard';
 import FlightCard from './components/FlightCard';
 import SearchBox from './components/SearchBox';
 import getWeather from './functions/weather';
+import getAllFlights from './functions/getFlights';
 import { notification } from 'antd';
 
 const airportParse = ([airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source]) => ({ airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source });
@@ -105,9 +106,12 @@ const App = () => {
     let [lat, lon] = findGeolocationFromIATA(IATA);
     let API_key = "8eecd0fb86128334073e887977445e60"
     let weatherObj = await getWeather(lat, lon, API_key);
-    // todo:  Joshua's function goes here
-
-    // todo: add the name property to the object being returned
+    let result = await getAllFlights(IATA, "1c39aabe965d1994225d0b18518c692a", findGeolocationFromIATA);
+    // console.log(result);
+    // console.log(weatherObj);
+    let finalObj = { ...weatherObj, ...result, name: IATA };
+    console.log(finalObj);
+    return finalObj;
   }
 
   let findGeolocationFromIATA = (IATA) => {
@@ -133,6 +137,7 @@ const App = () => {
       flightsData={aData}
       setSelectedAirport={onClickAirport}
       selectedAirportIATA={selectedAirport}
+
       airportLabel="name"
     >
     </FlightGlobe>
