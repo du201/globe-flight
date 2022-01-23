@@ -54,12 +54,14 @@ const App = () => {
     ]).then(([airports]) => {
       setAirports(airports
         .filter(airport => airport.hasOwnProperty('iata') && airport.iata !== "\\N")
-        .map(obj => ({...obj, color: [
-          '#FEE3EC',
-          '#F2789F'][Math.round(Math.random() * 1)],
-          size: Math.random() * 0.02 + 0.01})
-          ) // Add random color and height
-        );
+        .map(obj => ({
+          ...obj, color: [
+            '#FEE3EC',
+            '#F2789F'][Math.round(Math.random() * 1)],
+          size: Math.random() * 0.1 + 0.1
+        })
+        ) // Add random color and height
+      );
     });
     setSelectedAirport(airports[0].iata);
     setSelectedAirportData(airports[0]);
