@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# [GlobeFlights](http://globe-flight.herokuapp.com)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What it does
 
-## Available Scripts
+GlobeFlights allows users to search airports using their full name or IATA code in our database, which result is used to query more information on the selected airport through the [aviationstack API](https://aviationstack.com/). In addition to searching manually, users can also select the airport directly by clicking the cylinder on the globe. Once an airport is selected, its real-time information like weather and current flights will be displayed on the website. Users could further click on each individual flight to query the detailed information related to it.
 
-In the project directory, you can run:
+## How we built it
 
-### `npm start`
+Our code is entirely comprised of frontend reactjs code, which consists of a UI layout based on [ant design](https://ant.design/) and a 3D globe based on [react-globe.gl](https://github.com/vasturiano/react-globe.gl). 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+We built our globe component based on the `react-globe.gl` with supports and styling matching what we intended for the final result. This component will set the states on the top UI layout component to let it know which flight and airport are selected.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The UI layout handles all the data communication with external API and parses the information for the globe to consume.
 
-### `npm test`
+## Challenges we ran into
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+We initially want to set up cloud functions to call APIs and perform some additional operations on the collected data, but ran into some strange issues with our deployed code and have to switch to the full frontend approach.
 
-### `npm run build`
+## Accomplishments that we're proud of
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The globe can autofocus itself when you click the airport and flight!
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## What we learned
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Get to know/review reactjs and some basic web graphics knowledge.
 
-### `npm run eject`
+## What's next for GlobeFlights
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+We plan to add more information to each flight and airport based on other APIs as well as increase the number of airports displayed.## Inspiration
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## What it does
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+GlobeFlights allows users to search airports using their full name or IATA code in our database, which result is used to query more information on the selected airport through the [aviationstack API](https://aviationstack.com/). In addition to searching manually, users can also select the airport directly by clicking the cylinder on the globe. Once an airport is selected, its real-time information like weather and current flights will be displayed on the website. Users could further click on each individual flight to query the detailed information related to it.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## How we built it
 
-## Learn More
+Our code is entirely comprised of frontend reactjs code, which consists of a UI layout based on [ant design](https://ant.design/) and a 3D globe based on [react-globe.gl](https://github.com/vasturiano/react-globe.gl). 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+We built our globe component based on the `react-globe.gl` with supports and styling matching what we intended for the final result. This component will set the states on the top UI layout component to let it know which flight and airport are selected.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The UI layout handles all the data communication with external API and parses the information for the globe to consume.
 
-### Code Splitting
+## Challenges we ran into
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+We initially want to set up cloud functions to call APIs and perform some additional operations on the collected data, but ran into some strange issues with our deployed code and have to switch to the full frontend approach.
 
-### Analyzing the Bundle Size
+## Accomplishments that we're proud of
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+The globe can autofocus itself when you click the airport and flight!
 
-### Making a Progressive Web App
+## What we learned
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Get to know/review reactjs and some basic web graphics knowledge.
 
-### Advanced Configuration
+## What's next for GlobeFlights
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+We plan to add more information to each flight and airport based on other APIs as well as increase the number of airports displayed.
