@@ -66,15 +66,15 @@ function FlightGlobe(props) {
         pointAltitude={(e) => {
           e.size = !e.size ? 0.01 : e.size;
           // return !props.selectedAirportIATA ? e.size : e.iata == props.selectedAirportIATA ? 0.1 : e.size;
-          return !props.selectedAirportIATA ? e.size : e.iata == props.selectedAirportIATA ? Math.min(e.size * 3, 0.5) : e.size;
+          return !props.selectedAirportIATA ? e.size : e.iata === props.selectedAirportIATA ? Math.min(e.size * 3, 0.5) : e.size;
           // return !selectedAirport ? e.size : e === selectedAirport ? 0.5 : e.size;
         }}
         pointColor={(e) => {
-          const opacity = !props.selectedAirportIATA ? 0.6 : e.iata == props.selectedAirportIATA ? 0.9 : 0.6;
+          const opacity = !props.selectedAirportIATA ? 0.6 : e.iata === props.selectedAirportIATA ? 0.9 : 0.6;
           return addOpacity(e.color, opacity);
         }}
         pointRadius={(e) => {
-          return !props.selectedAirportIATA ? 0.5 : e.iata == props.selectedAirportIATA ? 1 : 0.5;
+          return !props.selectedAirportIATA ? 0.5 : e.iata === props.selectedAirportIATA ? 1 : 0.5;
         }}
         pointResolution={20}
         pointLabel={(e) => {

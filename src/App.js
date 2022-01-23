@@ -43,8 +43,9 @@ const App = () => {
   const [selectedAirport, setSelectedAirport] = useState("ORD"); // the airportId
   const [selectedFlight, setSelectedFlight] = useState(null); // todo: decide what to use to represent an unique flight
   const [searchBoxIsLoading, setSearchBoxIsLoading] = useState(false); // boolean
-  const [selectedAirportData, setSelectedAirportData] = useState(null); // {...}, the data for the currently selected airport from APIs
+  const [selectedAirportData, setSelectedAirportData] = useState({ name: "ORD", temperature: "70", humidity: "60", wind: "50", forecast: "wind" }); // {...}, the data for the currently selected airport from APIs
 
+  // Initiaization
   useEffect(() => {
     // load data
     Promise.all([
@@ -56,11 +57,12 @@ const App = () => {
         .map(obj => ({...obj, color: [
           '#FEE3EC',
           '#F2789F'][Math.round(Math.random() * 1)],
-          size: Math.random() * 0.1 + 0.1})
+          size: Math.random() * 0.02 + 0.01})
           ) // Add random color and height
         );
     });
-
+    setSelectedAirport(airports[0].iata);
+    setSelectedAirportData(airports[0]);
   }, []);
 
   // airportObj: the {...} for the airport
@@ -131,7 +133,7 @@ const App = () => {
       flightsData={aData}
       setSelectedAirport={onClickAirport}
       selectedAirportIATA={selectedAirport}
-      airportLabel="name"
+      // airportLabel="name"
     >
     </FlightGlobe>
     <AirportCard
