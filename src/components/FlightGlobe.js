@@ -66,7 +66,7 @@ function FlightGlobe(props) {
         pointAltitude={(e) => {
           e.size = !e.size ? 0.01 : e.size;
           // return !props.selectedAirportIATA ? e.size : e.iata == props.selectedAirportIATA ? 0.1 : e.size;
-          return !props.selectedAirportIATA ? e.size : e.iata === props.selectedAirportIATA ? Math.min(e.size * 3, 0.5) : e.size;
+          return !props.selectedAirportIATA ? e.size : e.iata === props.selectedAirportIATA ? Math.min(e.size * 5, 0.5) : e.size;
           // return !selectedAirport ? e.size : e === selectedAirport ? 0.5 : e.size;
         }}
         pointColor={(e) => {
@@ -126,7 +126,8 @@ function FlightGlobe(props) {
         arcDashGap={0.25}
         arcDashAnimateTime={2000}
         arcLabel={(e) => {
-          return `<p class="Globe-Label" style="color:${props.colorTheme.labelColor}">${e.label}</p>`;
+          let label = props.getFlightLabel(e);
+          return `<p class="Globe-Label" style="color:${props.colorTheme.labelColor}">${label}</p>`;
         }}
         arcsTransitionDuration={1000}
         onArcClick={(e) => {
@@ -182,7 +183,8 @@ FlightGlobe.propTypes = {
   flightDepartureLng: PropTypes.oneOfType(PropTypes.func, PropTypes.string),
   flightArrivalLat: PropTypes.oneOfType(PropTypes.func, PropTypes.string),
   flightArrivalLng: PropTypes.oneOfType(PropTypes.func, PropTypes.string),
-  flightAltitude: PropTypes.oneOfType(PropTypes.number, PropTypes.func, PropTypes.string)
+  flightAltitude: PropTypes.oneOfType(PropTypes.number, PropTypes.func, PropTypes.string),
+  getFlightLabel: PropTypes.func
 }
 
 FlightGlobe.defaultProps = {
@@ -196,6 +198,7 @@ FlightGlobe.defaultProps = {
   flightArrivalLat: 'endLat',
   flightArrivalLng: 'endLng',
   flightAltitude: null,
+  getFlightLabel: (e) => e.label,
   colorTheme: {
     backgroundColor: "#7A0BC0",
     sphereColor: "#B762C1",

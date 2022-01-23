@@ -137,10 +137,21 @@ const App = () => {
     </SearchBox>
     <FlightGlobe
       airportData={airports}
-      flightsData={aData}
+      flightsData={!airports.flights ? aData : airports.flights}
       setSelectedAirport={onClickAirport}
       selectedAirportIATA={selectedAirport}
-    // airportLabel="name"
+      airportLabel="name"
+
+      setSelectedFlight={setSelectedFlight}
+      getFlightLabel={(flight) => {
+        return `${flight.flight_iata}: ${flight.dep_airport} &rarr; ${flight.arr_airport}`
+      }}
+
+      flightDepartureLat={(e) => e.dep_location[0]}
+      flightDepartureLng={(e) => e.dep_location[1]}
+      flightArrivalLat={(e) => e.arr_location[0]}
+      flightArrivalLng={(e) => e.arr_location[1]}
+      flightAltitude={null}
     >
     </FlightGlobe>
     <AirportCard
