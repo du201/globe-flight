@@ -46,6 +46,7 @@ const App = () => {
   const [searchBoxIsLoading, setSearchBoxIsLoading] = useState(false); // boolean
   const [selectedAirportData, setSelectedAirportData] = useState({ name: "ORD", temperature: "70", humidity: "60", wind: "50", forecast: "wind" }); // {...}, the data for the currently selected airport from APIs
 
+  // Initiaization
   useEffect(() => {
     // load data
     Promise.all([
@@ -62,8 +63,10 @@ const App = () => {
         })
         ) // Add random color and height
       );
+      // TODO Call real data here?
+      // setSelectedAirport(airports[0].iata);
+      // setSelectedAirportData(airports[0]);
     });
-
   }, []);
 
   // airportObj: the {...} for the airport
@@ -137,8 +140,7 @@ const App = () => {
       flightsData={aData}
       setSelectedAirport={onClickAirport}
       selectedAirportIATA={selectedAirport}
-
-      airportLabel="name"
+    // airportLabel="name"
     >
     </FlightGlobe>
     <AirportCard
