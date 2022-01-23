@@ -65,15 +65,15 @@ function FlightGlobe(props) {
         pointLng={props.airportLng}
         pointAltitude={(e) => {
           e.size = !e.size ? 0.01 : e.size;
-          return !props.selectedAirportID ? e.size : e.airportId == props.selectedAirportID ? Math.min(e.size * 3, 0.5) : e.size;
+          return !props.selectedAirportIATA ? e.size : e.iata == props.selectedAirportIATA ? Math.min(e.size * 3, 0.5) : e.size;
           // return !selectedAirport ? e.size : e === selectedAirport ? 0.5 : e.size;
         }}
         pointColor={(e) => {
-          const opacity = !props.selectedAirportID ? 0.6 : e.airportId == props.selectedAirportID ? 0.9 : 0.6;
+          const opacity = !props.selectedAirportIATA ? 0.6 : e.iata == props.selectedAirportIATA ? 0.9 : 0.6;
           return addOpacity(e.color, opacity);
         }}
         pointRadius={(e) => {
-          return !props.selectedAirportID ? 0.5 : e.airportId == props.selectedAirportID ? 1 : 0.5;
+          return !props.selectedAirportIATA ? 0.5 : e.iata == props.selectedAirportIATA ? 1 : 0.5;
         }}
         pointResolution={20}
         pointLabel={(e) => {
@@ -173,7 +173,7 @@ FlightGlobe.propTypes = {
   setSelectedFlight: PropTypes.func,
   setSelectedAirport: PropTypes.func,
   // Selected airport from top component
-  selectedAirportID: PropTypes.string,
+  selectedAirportIATA: PropTypes.string,
   airportLat: PropTypes.oneOfType(PropTypes.func, PropTypes.string),
   airportLng: PropTypes.oneOfType(PropTypes.func, PropTypes.string),
   airportLabel: PropTypes.oneOfType(PropTypes.func, PropTypes.string),

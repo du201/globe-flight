@@ -37,7 +37,8 @@ const aData = [...Array(M).keys()].map(() => ({
 
 const App = () => {
   const [airports, setAirports] = useState([]); // [{...}], an array of all the airports
-  const [selectedAirport, setSelectedAirport] = useState(null); // the airportId
+  // In iata
+  const [selectedAirport, setSelectedAirport] = useState("ORD"); // the airportId
   const [selectedFlight, setSelectedFlight] = useState(null); // todo: decide what to use to represent an unique flight
   const [searchBoxIsLoading, setSearchBoxIsLoading] = useState(false); // boolean
 
@@ -56,8 +57,7 @@ const App = () => {
   let onClickAirport = (airportObj) => {
     console.log(airportObj);
     callAirportAPI(airportObj.iata);
-    // todo:
-    //setSelectedAirport();
+    setSelectedAirport(airportObj.iata);
   }
 
   // IATA: the three char string
@@ -66,7 +66,7 @@ const App = () => {
     // todo:
 
     setSearchBoxIsLoading(false);
-    //setSelectedAirport();
+    setSelectedAirport(IATA);
   }
 
   // todo: the API calling function for airport
@@ -86,6 +86,7 @@ const App = () => {
       airportData={gData}
       flightsData={aData}
       setSelectedAirport={onClickAirport}
+      selectedAirportIATA={selectedAirport}
     >
     </FlightGlobe>
     <AirportCard style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none' }} />
