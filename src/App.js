@@ -147,10 +147,10 @@ const App = () => {
         return `${flight.flight_iata}: ${flight.dep_airport} &rarr; ${flight.arr_airport}`
       }}
 
-      flightDepartureLat={(e) => e.dep_location[0]}
-      flightDepartureLng={(e) => e.dep_location[1]}
-      flightArrivalLat={(e) => e.arr_location[0]}
-      flightArrivalLng={(e) => e.arr_location[1]}
+      flightDepartureLat={(e) => !e.dep_location ? e.startLat : e.dep_location[0]}
+      flightDepartureLng={(e) => !e.dep_location ? e.startLng : e.dep_location[1]}
+      flightArrivalLat={(e) => !e.arr_location ? e.endLat : e.arr_location[0]}
+      flightArrivalLng={(e) => !e.arr_location ? e.endLng : e.arr_location[1]}
       flightAltitude={null}
     >
     </FlightGlobe>
