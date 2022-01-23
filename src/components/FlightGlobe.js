@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useRef, useEffect } from 'react';
 import { withSize, sizeMe } from 'react-sizeme'
 import * as THREE from 'three'
 // import countries from "./files/globe-data-min.json";
@@ -10,16 +10,26 @@ import PropTypes from 'prop-types';
 // import FlightCard from './components/FlightCard';
 
 function FlightGlobe(props) {
-  // TODO Specify props field?
-  // TODO Enum the color?
+  const globeEl = useRef();
+
   const gGlobeMaterial = new THREE.MeshPhongMaterial();
   gGlobeMaterial.color = new THREE.Color( props.colorTheme.sphereColor );
   // TODO Limit zoom range to prevent moire pattern
   // TODO Show space image on rotation?gi
   // TODO Country path boarder
+  // TODO Switch planet texture
 
   const [highlightArc, setHighlightArc] = useState();
   const [highlightPoint, setHighlightPoint] = useState();
+  const [pov, setPov] = useState({
+    lat: 0,
+    lng: 0,
+    altitude: 2.5
+  });
+
+  useEffect(() => {
+    globeEl.current.pointOfView(pov, 1000);
+  });
 
   function addOpacity(color, opacity) {
     return color + (Math.round(opacity * 255)).toString(16).padStart(2, '0');
@@ -28,16 +38,21 @@ function FlightGlobe(props) {
   return (
     <div className="App">
       <Globe
+        ref={globeEl}
         // globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
         width={props.size.width}
         // height={Math.round(props.size.height) <= 0 ? props.size.width : props.size.height}
         backgroundColor={props.colorTheme.backgroundColor}
+
+        // Camera control
+
+        // Sphere and atmosphere control
         atmosphereColor={props.colorTheme.atmosphereColor}
         globeMaterial={gGlobeMaterial}
         atmosphereAltitude={0.25}
 
-        pointsData={props.airportData}
 
+        pointsData={props.airportData}
         // Todo, change altitude based on the traffic count?
         pointLat={props.airportLat}
         pointLng={props.airportLng}
@@ -64,7 +79,13 @@ function FlightGlobe(props) {
           return `<p class="Globe-Label" style="color:${props.colorTheme.labelColor}">${label}</p>`;
         }}
         onPointClick={(e) => {
+          console.log(e);
           setHighlightPoint(e);
+          setPov({
+            lat: (e.lat - 20) % 90,
+            lng: (e.lng + 20) % 180,
+            altitude: 2.5
+          })
           props.setSelectedAirport(e);
         }}
 
@@ -102,6 +123,12 @@ function FlightGlobe(props) {
         arcsTransitionDuration={1000}
         onArcClick={(e) => {
           setHighlightArc(e);
+          console.log(e);
+          setPov({
+            lat: ((e.startLat + e.endLat)/2 - 5) % 90,
+            lng: ((e.startLng + e.endLng)/2 - 5) % 180,
+            altitude: 2.5
+          })
           props.setSelectedAirport(e);
         }}
       />
