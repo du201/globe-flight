@@ -56,7 +56,7 @@ function AirportCard({ style, selectedAirportData }) {
             <br />
             <Row gutter={16}>
                 <Col span={8}>
-                    <Statistic title="Time" value={date.toTimeString()} valueStyle={{ fontSize: '15px' }} />
+                    <Statistic title="Time" value={date.toTimeString().substring(0, date.toTimeString().indexOf('GMT'))} valueStyle={{ fontSize: '15px' }} />
                 </Col>
                 <Col span={8}>
                     <Statistic title="Day" value={weekday[date.getDay()]} valueStyle={{ fontSize: '15px' }} />
