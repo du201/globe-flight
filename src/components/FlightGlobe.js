@@ -14,11 +14,6 @@ function FlightGlobe(props) {
 
   const gGlobeMaterial = new THREE.MeshPhongMaterial();
   gGlobeMaterial.color = new THREE.Color( props.colorTheme.sphereColor );
-  // TODO Limit zoom range to prevent moire pattern
-  // TODO Realistic lighting
-  // TODO Show space image on rotation?gi
-  // TODO Country path boarder
-  // TODO Switch planet texture
 
   const [highlightArc, setHighlightArc] = useState();
   const [highlightPoint, setHighlightPoint] = useState();
@@ -28,8 +23,19 @@ function FlightGlobe(props) {
     altitude: 2.5
   });
 
+  // Bind directional light to camera
   useEffect(() => {
-    console.log(pov);
+    let scene = globeEl.current.scene();
+    let light = scene.getObjectByProperty("type", "DirectionalLight");
+    if (light) {
+      scene.remove(light);
+      globeEl.current.camera().add(light);
+      scene.add(globeEl.current.camera());
+    }
+  });
+
+  useEffect(() => {
+    // console.log(pov);
     globeEl.current.pointOfView(pov, 1000);
   }, [pov]);
 
