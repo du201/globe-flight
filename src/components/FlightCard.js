@@ -19,8 +19,8 @@ function FlightCard({ style, selectedFlightData }) {
             <Card title={`${selectedFlightData['name']} (${selectedFlightData['flight_iata']})`} style={{ backgroundColor: "rgba(0,0,0,0)" }} bordered={false}>
                 <p>
                     <Text strong>{`${selectedFlightData['dep_iata']}`}
-                    <ArrowRightOutlined></ArrowRightOutlined>
-                    {`${selectedFlightData['arr_iata']}`}</Text>
+                        <ArrowRightOutlined></ArrowRightOutlined>
+                        {`${selectedFlightData['arr_iata']}`}</Text>
                 </p>
                 <p>
                     <Text strong>Status: </Text>
@@ -28,11 +28,11 @@ function FlightCard({ style, selectedFlightData }) {
                 </p>
                 <p>
                     <Text strong>Departure: </Text>
-                    <Text>{`${arr_date.toDateString()} - ${arr_date.toTimeString()}`}</Text>
+                    <Text>{`${arr_date.toDateString()} - ${arr_date.toTimeString().substring(0, arr_date.toTimeString().indexOf('GMT'))}`}</Text>
                 </p>
                 <p>
                     <Text strong>Arrival: </Text>
-                    <Text>{`${dep_date.toDateString()} - ${dep_date.toTimeString()}`}</Text>
+                    <Text>{`${dep_date.toDateString()} - ${dep_date.toTimeString().substring(0, dep_date.toTimeString().indexOf('GMT'))}`}</Text>
                 </p>
                 <p>
                     <Text strong>Delay: </Text>
