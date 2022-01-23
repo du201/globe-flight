@@ -119,13 +119,10 @@ const App = () => {
     // let lat = 33.44
     // let lon = -94.04
     let [lat, lon] = findGeolocationFromIATA(IATA);
-    let API_keys = [
-      "99f73a2a5be11ab14749ad9e383ca382",
-      "4d7e7dd4b0d1b8d069029d7495b96789",
-      "8eecd0fb86128334073e887977445e60"
-    ];
-    let weatherObj = await getWeather(lat, lon, API_keys[0]);
-    let result = await getAllFlights(IATA, "", findGeolocationFromIATA);
+    let API_key = "8eecd0fb86128334073e887977445e60"
+    let Flight_API_Keys = ["99f73a2a5be11ab14749ad9e383ca382"];
+    let weatherObj = await getWeather(lat, lon, API_key);
+    let result = await getAllFlights(IATA, Flight_API_Keys[0], findGeolocationFromIATA);
     // console.log(result);
     // console.log(weatherObj);
     let finalObj = { ...weatherObj, ...result, name: `${findAirportNameFromIATA(IATA)} (${IATA})` };
