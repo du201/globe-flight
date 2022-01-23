@@ -66,7 +66,7 @@ function FlightGlobe(props) {
         pointAltitude={(e) => {
           e.size = !e.size ? 0.01 : e.size;
           // return !props.selectedAirportIATA ? e.size : e.iata == props.selectedAirportIATA ? 0.1 : e.size;
-          return !props.selectedAirportIATA ? e.size : e.iata === props.selectedAirportIATA ? Math.min(e.size * 5, 0.5) : e.size;
+          return !props.selectedAirportIATA ? e.size : e.iata === props.selectedAirportIATA ? Math.min(e.size * 7, 0.5) : e.size;
           // return !selectedAirport ? e.size : e === selectedAirport ? 0.5 : e.size;
         }}
         pointColor={(e) => {
@@ -74,7 +74,7 @@ function FlightGlobe(props) {
           return addOpacity(e.color, opacity);
         }}
         pointRadius={(e) => {
-          return !props.selectedAirportIATA ? 0.5 : e.iata === props.selectedAirportIATA ? 1 : 0.5;
+          return !props.selectedAirportIATA ? 0.5 : e.iata === props.selectedAirportIATA ? 0.7 : 0.5;
         }}
         pointResolution={20}
         pointLabel={(e) => {
@@ -114,8 +114,9 @@ function FlightGlobe(props) {
         arcEndLat={props.flightArrivalLat}
         arcEndLng={props.flightArrivalLng}
         arcColor={(e) => {
+          let color = props.selectedAirportIATA === e.iata ? "#FFADAD" : "#FFDAC7";
           const opacity = !highlightArc ? 0.6 : e === highlightArc ? 0.9 : 0.4;
-          return addOpacity(e.color, opacity);
+          return addOpacity(color, opacity);
         }}
         arcAltitude={props.flightAltitude}
         arcStroke={(e) => {
@@ -161,7 +162,7 @@ function FlightGlobe(props) {
 // Types for propp
 FlightGlobe.propTypes = {
   airportData: PropTypes.array.isRequired,
-  flightsData: PropTypes.array.isRequired,
+  flightsData: PropTypes.array,
   colorTheme: PropTypes.shape({
     backgroundColor: PropTypes.string,
     sphereColor: PropTypes.string,
@@ -176,6 +177,7 @@ FlightGlobe.propTypes = {
   setSelectedAirport: PropTypes.func,
   // Selected airport from top component
   selectedAirportIATA: PropTypes.string,
+  selectedAirportData: PropTypes.object,
   airportLat: PropTypes.oneOfType(PropTypes.func, PropTypes.string),
   airportLng: PropTypes.oneOfType(PropTypes.func, PropTypes.string),
   airportLabel: PropTypes.oneOfType(PropTypes.func, PropTypes.string),

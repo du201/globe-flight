@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect, useRef } from 'react';
 import './App.css';
 import * as d3 from 'd3';
 import 'antd/dist/antd.css';
@@ -39,6 +39,7 @@ const aData = [...Array(M).keys()].map(() => ({
 }));
 
 const App = () => {
+  const globeEl = useRef();
   const [airports, setAirports] = useState([]); // [{...}], an array of all the airports
   // In iata
   const [selectedAirport, setSelectedAirport] = useState(null); // the airportId
@@ -56,7 +57,7 @@ const App = () => {
     dep_location: ['60', '60'],
   }); // todo: decide what to use to represent an unique flight
   const [searchBoxIsLoading, setSearchBoxIsLoading] = useState(false); // boolean
-  const [selectedAirportData, setSelectedAirportData] = useState({ name: "ORD", temperature: "70", humidity: "60", wind: "50", forecast: "wind" }); // {...}, the data for the currently selected airport from APIs
+  const [selectedAirportData, setSelectedAirportData] = useState({ name: "ORD", temperature: "70", humidity: "60", wind: "50", forecast: "wind", flights: [], lat: 0, lng: 0}); // {...}, the data for the currently selected airport from APIs
 
   // Initiaization
   useEffect(() => {
@@ -121,7 +122,7 @@ const App = () => {
     let [lat, lon] = findGeolocationFromIATA(IATA);
     let API_key = "8eecd0fb86128334073e887977445e60"
     let weatherObj = await getWeather(lat, lon, API_key);
-    let result = await getAllFlights(IATA, "1c39aabe965d1994225d0b18518c692a", findGeolocationFromIATA);
+    let result = await getAllFlights(IATA, "4d7e7dd4b0d1b8d069029d7495b96789", findGeolocationFromIATA);
     // console.log(result);
     // console.log(weatherObj);
     let finalObj = { ...weatherObj, ...result, name: `${findAirportNameFromIATA(IATA)} (${IATA})` };
@@ -148,10 +149,12 @@ const App = () => {
 
     </SearchBox>
     <FlightGlobe
+      ref={globeEl}
       airportData={airports}
-      flightsData={!airports.flights ? aData : airports.flights}
+      flightsData={selectedAirportData.flights}
       setSelectedAirport={onClickAirport}
       selectedAirportIATA={selectedAirport}
+      selectedAirportData={selectedAirportData}
       airportLabel="name"
 
       setSelectedFlight={setSelectedFlight}
