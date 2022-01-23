@@ -70,11 +70,11 @@ function FlightGlobe(props) {
           // return !selectedAirport ? e.size : e === selectedAirport ? 0.5 : e.size;
         }}
         pointColor={(e) => {
-          const opacity = !props.selectedAirportIATA ? 0.6 : e.iata === props.selectedAirportIATA ? 0.9 : 0.6;
+          const opacity = !props.selectedAirportIATA ? 0.7 : e.iata === props.selectedAirportIATA ? 0.9 : 0.7;
           return addOpacity(e.color, opacity);
         }}
         pointRadius={(e) => {
-          return !props.selectedAirportIATA ? 0.5 : e.iata === props.selectedAirportIATA ? 0.7 : 0.5;
+          return !props.selectedAirportIATA ? 0.35 : e.iata === props.selectedAirportIATA ? 0.5 : 0.35;
         }}
         pointResolution={20}
         pointLabel={(e) => {
@@ -114,7 +114,7 @@ function FlightGlobe(props) {
         arcEndLat={props.flightArrivalLat}
         arcEndLng={props.flightArrivalLng}
         arcColor={(e) => {
-          let color = props.selectedAirportIATA === e.iata ? "#FFADAD" : "#FFDAC7";
+          let color = props.selectedAirportIATA === e.dep_iata ? "#270082" : "#FFDAC7";
           const opacity = !highlightArc ? 0.6 : e === highlightArc ? 0.9 : 0.4;
           return addOpacity(color, opacity);
         }}
