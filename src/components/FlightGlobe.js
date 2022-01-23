@@ -48,7 +48,7 @@ function FlightGlobe(props) {
     <div className="App">
       <Globe
         ref={globeEl}
-        // globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+        globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
         width={props.size.width}
         // height={Math.round(props.size.height) <= 0 ? props.size.width : props.size.height}
         backgroundColor={props.colorTheme.backgroundColor}
@@ -146,13 +146,16 @@ function FlightGlobe(props) {
           // } else {
           //   meanLng = ((e.startLng + e.endLng)/2) % 180;
           // }
+          let startLat = parseFloat(props.flightDepartureLat(e));
+          let startLng = parseFloat(props.flightDepartureLng(e));
+          let endLat = parseFloat(props.flightArrivalLat(e));
           setPov({
-            lat: (((e.startLat + e.endLat)/3) - (Math.random() * 5 + 5)) % 90,
-            lng: (e.startLng + Math.random() * 10),
+            lat: (((startLat + endLat)/3) - (Math.random() * 5 + 5)) % 90,
+            lng: (startLng + Math.random() * 10),
             altitude: 2.5
           });
           setHighlightArc(e);
-          props.setSelectedAirport(e);
+          props.setSelectedFlight(e);
         }}
       />
     </div>

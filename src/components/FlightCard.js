@@ -18,7 +18,9 @@ function FlightCard({ style, selectedFlightData }) {
         <div style={style}>
             <Card title={`${selectedFlightData['name']} (${selectedFlightData['flight_iata']})`} style={{ backgroundColor: "rgba(0,0,0,0)" }} bordered={false}>
                 <p>
-                    <Text strong>{`${selectedFlightData['dep_iata']} &#8594; ${selectedFlightData['arr_iata']}`}</Text>
+                    <Text strong>{`${selectedFlightData['dep_iata']}`}
+                    <ArrowRightOutlined></ArrowRightOutlined>
+                    {`${selectedFlightData['arr_iata']}`}</Text>
                 </p>
                 <p>
                     <Text strong>Status: </Text>
