@@ -7,7 +7,6 @@ const SearchBox = ({ onSearchAirport, airports, searchBoxIsLoading, setSearchBox
     const onSearch = (airportFullName) => {
 
         if (airportsList.includes(airportFullName)) {
-            setSearchBoxIsLoading(true);
             onSearchAirport(airportFullName.substring(airportFullName.indexOf('(') + 1,
                 airportFullName.indexOf(')')));
         } else { // if the input string is not an airport name
