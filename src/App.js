@@ -42,8 +42,8 @@ const App = () => {
   const [airports, setAirports] = useState([]); // [{...}], an array of all the airports
   // In iata
   const [selectedAirport, setSelectedAirport] = useState(null); // the airportId
-  const [selectedFlight, setSelectedFlight] = useState({
-    name: 'FedEx',
+  const [selectedFlight, setSelectedFlight] = useState({ // these are placeholder data
+    name: 'placeholder',
     flight_iata: 'FX12',
     dep_airport: 'Kansai International',
     dep_iata: 'KIX',
@@ -54,7 +54,7 @@ const App = () => {
     dep_time: '2022-01-23T02:30:00+00:00',
     arr_location: ['40', '40'],
     dep_location: ['60', '60'],
-  }); // todo: decide what to use to represent an unique flight
+  });
   const [searchBoxIsLoading, setSearchBoxIsLoading] = useState(false); // boolean
   const [selectedAirportData, setSelectedAirportData] = useState({ name: "ORD", temperature: "70", humidity: "60", wind: "50", forecast: "wind" }); // {...}, the data for the currently selected airport from APIs
 
@@ -114,7 +114,6 @@ const App = () => {
     });
   }
 
-  // todo: the API calling function for airport
   let callAirportAPI = async (IATA) => {
     // let lat = 33.44
     // let lon = -94.04
@@ -171,7 +170,7 @@ const App = () => {
       style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none', color: "#270082" }} />
     <FlightCard
       selectedFlightData={selectedFlight}
-      style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, right: 30, display: selectedFlight ? 'block' : 'none', color: "#270082" }} />
+      style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, right: 30, display: selectedFlight.name == 'placeholder' ? 'none' : 'block', color: "#270082" }} />
   </div>;
 };
 

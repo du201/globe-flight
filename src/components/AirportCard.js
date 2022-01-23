@@ -5,7 +5,6 @@ const { Title, Text } = Typography;
 
 function AirportCard({ style, selectedAirportData }) {
 
-    // todo:  update the time with real time value if have time
     let date = new Date(new Date().toLocaleString("en-US", { timeZone: selectedAirportData.timezone }));
     const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     return (
@@ -57,7 +56,7 @@ function AirportCard({ style, selectedAirportData }) {
             <br />
             <Row gutter={16}>
                 <Col span={8}>
-                    <Statistic title="Time" value={date.toTimeString()} suffix="CST" valueStyle={{ fontSize: '15px' }} />
+                    <Statistic title="Time" value={date.toTimeString()} valueStyle={{ fontSize: '15px' }} />
                 </Col>
                 <Col span={8}>
                     <Statistic title="Day" value={weekday[date.getDay()]} valueStyle={{ fontSize: '15px' }} />
