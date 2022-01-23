@@ -3,7 +3,7 @@ import { Card, Popover, Button, Row, Col, Typography } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
 const { Text } = Typography;
 
-function FlightCard({ style, selectedAirportData }) {
+function FlightCard({ style, selectedFlightData }) {
     // name: flight number
     // departure
     // arrival
@@ -12,27 +12,29 @@ function FlightCard({ style, selectedAirportData }) {
     // time left
     // departure place current time
     // arrival place current time
+    const arr_date = new Date(selectedFlightData['arr_time'])
+    const dep_date = new Date(selectedFlightData['dep_time'])
     return (
         <div style={style}>
-            <Card title="United Airlines (UA149)" style={{ backgroundColor: "rgba(0,0,0,0)" }} bordered={false}>
+            <Card title={`${selectedFlightData['name']} (${selectedFlightData['flight_iata']})`} style={{ backgroundColor: "rgba(0,0,0,0)" }} bordered={false}>
                 <p>
-                    <Text strong>ORD &#8594; LAX</Text>
+                    <Text strong>{`${selectedFlightData['dep_iata']} &#8594; ${selectedFlightData['arr_iata']}`}</Text>
                 </p>
                 <p>
                     <Text strong>Status: </Text>
-                    <Text>Scheduled</Text>
+                    <Text>Active</Text>
                 </p>
                 <p>
                     <Text strong>Departure: </Text>
-                    <Text>Sunday, 20 Jan 2022 - 18:00</Text>
+                    <Text>{`${arr_date.toDateString()} - ${arr_date.toTimeString()}`}</Text>
                 </p>
                 <p>
                     <Text strong>Arrival: </Text>
-                    <Text>Monday, 21 Jan 2022 - 2:00</Text>
+                    <Text>{`${dep_date.toDateString()} - ${dep_date.toTimeString()}`}</Text>
                 </p>
                 <p>
                     <Text strong>Delay: </Text>
-                    <Text>40 min</Text>
+                    <Text>{`${selectedFlightData['delay']} min`}</Text>
                 </p>
             </Card>
         </div>

@@ -1,5 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Input, AutoComplete, notification } from 'antd';
+import '../App.css';
+
 
 const SearchBox = ({ onSearchAirport, airports, searchBoxIsLoading, setSearchBoxIsLoading }) => {
     const [airportsFinalList, setAirportsFinalList] = useState([]);
@@ -39,7 +41,15 @@ const SearchBox = ({ onSearchAirport, airports, searchBoxIsLoading, setSearchBox
                 transform: 'translateX(-50%)', width: '30%'
             }}
         >
-            <Input.Search size="large" placeholder="search for airports" enterButton style={{}} onSearch={onSearch} loading={searchBoxIsLoading} onChange={onChange} />
+            <Input.Search 
+                size="large" 
+                placeholder="search for airports" 
+                enterButton 
+                style={{}} 
+                onSearch={onSearch}
+                loading={searchBoxIsLoading} 
+                onChange={onChange} 
+        />
         </AutoComplete>)
 }
 

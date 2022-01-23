@@ -12,19 +12,19 @@ import { notification } from 'antd';
 
 const airportParse = ([airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source]) => ({ airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source });
 
-const N = 10;
+// const N = 10;
 const M = 20;
-const gData = [...Array(N).keys()].map(() => ({
-  lat: (Math.random() - 0.5) * 180,
-  lng: (Math.random() - 0.5) * 360,
-  size: Math.random() / 3,
-  color: [
-    '#FEE3EC',
-    '#F2789F'
-  ][Math.round(Math.random() * 1)],
-  label: ["Hello", 'world', 'im blue', 'im green'][Math.round(Math.random() * 3)],
-  emphasize: false
-}));
+// const gData = [...Array(N).keys()].map(() => ({
+//   lat: (Math.random() - 0.5) * 180,
+//   lng: (Math.random() - 0.5) * 360,
+//   size: Math.random() / 3,
+//   color: [
+//     '#FEE3EC',
+//     '#F2789F'
+//   ][Math.round(Math.random() * 1)],
+//   label: ["Hello", 'world', 'im blue', 'im green'][Math.round(Math.random() * 3)],
+//   emphasize: false
+// }));
 
 // Sample arc data
 const aData = [...Array(M).keys()].map(() => ({
@@ -59,7 +59,7 @@ const App = () => {
           ...obj, color: [
             '#FEE3EC',
             '#F2789F'][Math.round(Math.random() * 1)],
-          size: Math.random() * 0.1 + 0.1
+          size: Math.random() * 0.02 + 0.01
         })
         ) // Add random color and height
       );
@@ -137,18 +137,29 @@ const App = () => {
     </SearchBox>
     <FlightGlobe
       airportData={airports}
-      flightsData={aData}
+      flightsData={!airports.flights ? aData : airports.flights}
       setSelectedAirport={onClickAirport}
       selectedAirportIATA={selectedAirport}
-    // airportLabel="name"
+      airportLabel="name"
+
+      setSelectedFlight={setSelectedFlight}
+      getFlightLabel={(flight) => {
+        return `${flight.flight_iata}: ${flight.dep_airport} &rarr; ${flight.arr_airport}`
+      }}
+
+      flightDepartureLat={(e) => !e.dep_location ? e.startLat : e.dep_location[0]}
+      flightDepartureLng={(e) => !e.dep_location ? e.startLng : e.dep_location[1]}
+      flightArrivalLat={(e) => !e.arr_location ? e.endLat : e.arr_location[0]}
+      flightArrivalLng={(e) => !e.arr_location ? e.endLng : e.arr_location[1]}
+      flightAltitude={null}
     >
     </FlightGlobe>
     <AirportCard
       selectedAirportData={selectedAirportData}
-      style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none' }} />
+      style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none', color: "#270082"}} />
     <FlightCard
       selectedAirportData={selectedAirportData}
-      style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, right: 30, display: selectedFlight ? 'block' : 'none' }} />
+      style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, right: 30, display: selectedFlight ? 'block' : 'none', color: "#270082"}} />
   </div>;
 };
 
