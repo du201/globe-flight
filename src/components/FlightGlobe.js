@@ -15,8 +15,9 @@ function FlightGlobe(props) {
   const gGlobeMaterial = new THREE.MeshPhongMaterial();
   gGlobeMaterial.color = new THREE.Color( props.colorTheme.sphereColor );
 
+  const [useOwnSelected, setUseOwnSelected] = useState(false);
   const [highlightArc, setHighlightArc] = useState();
-  const [highlightPoint, setHighlightPoint] = useState();
+  // const [highlightPoint, setHighlightPoint] = useState();
   const [pov, setPov] = useState({
     lat: 0,
     lng: 0,
@@ -64,15 +65,15 @@ function FlightGlobe(props) {
         pointLng={props.airportLng}
         pointAltitude={(e) => {
           e.size = !e.size ? 0.01 : e.size;
-          return !highlightPoint ? e.size : e === highlightPoint ? Math.min(e.size * 3, 0.5) : e.size;
-          return !highlightPoint ? e.size : e === highlightPoint ? 0.5 : e.size;
+          return !props.selectedAirportIATA ? e.size : e.iata == props.selectedAirportIATA ? Math.min(e.size * 3, 0.5) : e.size;
+          // return !selectedAirport ? e.size : e === selectedAirport ? 0.5 : e.size;
         }}
         pointColor={(e) => {
-          const opacity = !highlightPoint ? 0.6 : e === highlightPoint ? 0.9 : 0.6;
+          const opacity = !props.selectedAirportIATA ? 0.6 : e.iata == props.selectedAirportIATA ? 0.9 : 0.6;
           return addOpacity(e.color, opacity);
         }}
         pointRadius={(e) => {
-          return !highlightPoint ? 0.5 : e === highlightPoint ? 1 : 0.5;
+          return !props.selectedAirportIATA ? 0.5 : e.iata == props.selectedAirportIATA ? 1 : 0.5;
         }}
         pointResolution={20}
         pointLabel={(e) => {
@@ -91,7 +92,7 @@ function FlightGlobe(props) {
             lng: (e.lng + 20) % 180,
             altitude: 2.5
           });
-          setHighlightPoint(e);
+          // setHighlightPoint(e);
           props.setSelectedAirport(e);
         }}
 
@@ -171,6 +172,8 @@ FlightGlobe.propTypes = {
   // Callbacks to upper
   setSelectedFlight: PropTypes.func,
   setSelectedAirport: PropTypes.func,
+  // Selected airport from top component
+  selectedAirportIATA: PropTypes.string,
   airportLat: PropTypes.oneOfType(PropTypes.func, PropTypes.string),
   airportLng: PropTypes.oneOfType(PropTypes.func, PropTypes.string),
   airportLabel: PropTypes.oneOfType(PropTypes.func, PropTypes.string),

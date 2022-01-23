@@ -25,8 +25,6 @@ const gData = [...Array(N).keys()].map(() => ({
   emphasize: false
 }));
 
-// TODO Auto focus of airport?
-
 // Sample arc data
 const aData = [...Array(M).keys()].map(() => ({
   startLat: (Math.random() - 0.5) * 180,
@@ -41,7 +39,8 @@ const aData = [...Array(M).keys()].map(() => ({
 
 const App = () => {
   const [airports, setAirports] = useState([]); // [{...}], an array of all the airports
-  const [selectedAirport, setSelectedAirport] = useState(null); // the IATA
+  // In iata
+  const [selectedAirport, setSelectedAirport] = useState("ORD"); // the airportId
   const [selectedFlight, setSelectedFlight] = useState(null); // todo: decide what to use to represent an unique flight
   const [searchBoxIsLoading, setSearchBoxIsLoading] = useState(false); // boolean
   const [selectedAirportData, setSelectedAirportData] = useState(null); // {...}, the data for the currently selected airport from APIs
@@ -124,6 +123,7 @@ const App = () => {
       airportData={gData}
       flightsData={aData}
       setSelectedAirport={onClickAirport}
+      selectedAirportIATA={selectedAirport}
     >
     </FlightGlobe>
     <AirportCard
