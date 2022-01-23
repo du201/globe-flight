@@ -5,8 +5,8 @@
 
 async function getFlights(airport, iata_type, API_key, findGeolocationFromIATA) {
     // Switch between dev and prod
-    let protocol = window.location.protocol !== 'https:' ? 'http' : 'https'
-    const response = await fetch(`${protocol}://api.aviationstack.com/v1/flights?access_key=${API_key}&${iata_type}=${airport}`);
+    // let protocol = window.location.protocol !== 'https:' ? 'http' : 'https'
+    const response = await fetch(`http://api.aviationstack.com/v1/flights?access_key=${API_key}&${iata_type}=${airport}`);
     const receivedResponse = await response.json()
     var data = [];
     var count = 0;
