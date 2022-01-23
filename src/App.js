@@ -92,10 +92,24 @@ const App = () => {
 
   // todo: the API calling function for airport
   let callAirportAPI = async (IATA) => {
-    let lat = 33.44
-    let lon = -94.04
+    // let lat = 33.44
+    // let lon = -94.04
+    let [lat, lon] = findGeolocationFromIATA(IATA);
     let API_key = "8eecd0fb86128334073e887977445e60"
-    await getWeather(lat, lon, API_key);
+    let weatherObj = await getWeather(lat, lon, API_key);
+    // todo:  Joshua's function goes here
+
+    // todo: add the name property to the object being returned
+  }
+
+  let findGeolocationFromIATA = (IATA) => {
+    let airportObj = airports.find(airport => airport.iata === IATA);
+    return [airportObj.lat, airportObj.lng];
+  }
+
+  let findAirportNameFromIATA = (IATA) => {
+    let airportObj = airports.find(airport => airport.iata === IATA);
+    return airportObj.name;
   }
 
   return <div>
@@ -112,8 +126,12 @@ const App = () => {
       setSelectedAirport={onClickAirport}
     >
     </FlightGlobe>
-    <AirportCard style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none' }} />
-    <FlightCard style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, right: 30, display: selectedFlight ? 'block' : 'none' }} />
+    <AirportCard
+      selectedAirportData={selectedAirportData}
+      style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none' }} />
+    <FlightCard
+      selectedAirportData={selectedAirportData}
+      style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, right: 30, display: selectedFlight ? 'block' : 'none' }} />
   </div>;
 };
 
