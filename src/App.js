@@ -62,9 +62,10 @@ const App = () => {
         })
         ) // Add random color and height
       );
+      // TODO Call real data here?
+      // setSelectedAirport(airports[0].iata);
+      // setSelectedAirportData(airports[0]);
     });
-    setSelectedAirport(airports[0].iata);
-    setSelectedAirportData(airports[0]);
   }, []);
 
   // airportObj: the {...} for the airport
