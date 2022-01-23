@@ -1,81 +1,12 @@
 import React, { Component, useState, useEffect } from 'react';
-import * as THREE from 'three'
-// import flights_sample from "./files/flights.json"
 import './App.css';
-import Globe from 'react-globe.gl';
-import ReactDOM from 'react-dom';
 import * as d3 from 'd3';
-import indexBy from 'index-array-by';
-import { Input, AutoComplete } from 'antd';
 import 'antd/dist/antd.css';
 import FlightGlobe from './components/FlightGlobe';
 import AirportCard from './components/AirportCard';
+import SearchBox from './components/SearchBox';
 
 const airportParse = ([airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source]) => ({ airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source });
-
-const Complete = ({ setSelectedAirport, airports }) => {
-  // const [options, setOptions] = useState([{
-  //   value: "IND",
-  // }, {
-  //   value: "ORD",
-  // }, {
-  //   value: "NYC",
-  // }]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const onSearch = (value) => {
-    console.log('onSearch', value);
-    setIsLoading(true);
-    setTimeout(airportDataCB, 2000);
-  };
-
-  const airportDataCB = (data) => {
-    setIsLoading(false);
-    setSelectedAirport({ data: 'fake' });
-  }
-
-  /**
-   * callback func when an airport on the map is clicked
-   */
-  const mapClickAirportCB = (IATA) => {
-
-  }
-
-  /**
-   * callback func when an airport on the map is clicked
-   */
-  const mapClickFlightCB = (IATA) => {
-
-  }
-
-  let iataList = airports.length == 0 ? ['Loading...'] : airports.map(airport => airport.iata);
-  console.log(iataList);
-
-  return (
-    // <AutoComplete
-    //   dropdownMatchSelectWidth={252}
-    //   options={options}
-    //   onSelect={onSelect}
-    //   onSearch={handleSearch}
-    //   style={{
-    //     position: 'fixed', top: 30, zIndex: 10, left: '50%',
-    //     transform: 'translateX(-50%)'
-    //   }}
-    // >
-    //   <Input.Search size="large" placeholder="search for airports" enterButton style={{}} onSearch={value => console.log(value)} />
-    // </AutoComplete>
-
-    <AutoComplete
-      options={[]}
-      style={{
-        position: 'fixed', top: 30, zIndex: 10, left: '50%',
-        transform: 'translateX(-50%)', width: '30%'
-      }}
-    >
-      <Input.Search size="large" placeholder="search for airports" enterButton style={{}} onSearch={onSearch} loading={isLoading} />
-    </AutoComplete>)
-}
-
 
 const N = 10;
 const M = 20;
@@ -106,9 +37,10 @@ const aData = [...Array(M).keys()].map(() => ({
 }));
 
 const App = () => {
-  const [airports, setAirports] = useState([]);
-  const [selectedAirport, setSelectedAirport] = useState(true);
-  const [selectedFlight, setSelectedFlight] = useState();
+  const [airports, setAirports] = useState([]); // [{...}], an array of all the airports
+  const [selectedAirport, setSelectedAirport] = useState(null); // the airportId
+  const [selectedFlight, setSelectedFlight] = useState(); // todo: decide what to use to represent an unique flight
+  const [searchBoxIsLoading, setSearchBoxIsLoading] = useState(false); // boolean
 
   useEffect(() => {
     // load data
@@ -116,22 +48,48 @@ const App = () => {
       fetch('https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat').then(res => res.text())
         .then(d => d3.csvParseRows(d, airportParse))
     ]).then(([airports]) => {
-
-      // const byIata = indexBy(airports, 'iata', false);
       setAirports(airports);
     });
 
   }, []);
 
+  // airportObj: the {...} for the airport
+  let onClickAirport = (airportObj) => {
+    console.log(airportObj);
+    callAirportAPI(airportObj.iata);
+    // todo:
+    //setSelectedAirport();
+  }
+
+  // IATA: the three char string
+  let onSearchAirport = (IATA) => {
+    callAirportAPI(IATA);
+    // todo:
+
+    setSearchBoxIsLoading(false);
+    //setSelectedAirport();
+  }
+
+  // todo: the API calling function for airport
+  let callAirportAPI = (IATA) => {
+
+  }
+
   return <div>
-    <Complete setSelectedAirport={setSelectedAirport} airports={airports}></Complete>
+    <SearchBox
+      onSearchAirport={onSearchAirport}
+      airports={airports}
+      searchBoxIsLoading={searchBoxIsLoading}
+      setSearchBoxIsLoading={setSearchBoxIsLoading}>
+
+    </SearchBox>
     <FlightGlobe
       airportData={gData}
       flightsData={aData}
+      setSelectedAirport={onClickAirport}
     >
     </FlightGlobe>
     <AirportCard style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none', fontSize: '10px' }} />
-    {/* <div style={{ width: 300, height: 300, backgroundColor: 'blue', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none' }}></div> */}
     <div style={{ width: 300, height: 300, backgroundColor: 'green', position: 'fixed', bottom: 30, right: 30 }}></div>
   </div>;
 };
