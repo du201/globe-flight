@@ -56,7 +56,7 @@ function AirportCard({ style, selectedAirportData }) {
                     <Statistic title="Time" value={new Date().toLocaleTimeString('en-US')} suffix="CST" valueStyle={{ fontSize: '15px' }} />
                 </Col>
                 <Col span={8}>
-                    <Statistic title="Day" value={new Date().date()} valueStyle={{ fontSize: '15px' }} />
+                    <Statistic title="Day" value={'Monday'} valueStyle={{ fontSize: '15px' }} />
                 </Col>
                 <Col span={8}>
                     <Statistic title="Date" value="January 22, 2022" valueStyle={{ fontSize: '15px' }} />

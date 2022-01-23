@@ -43,7 +43,7 @@ const App = () => {
   const [selectedAirport, setSelectedAirport] = useState("ORD"); // the airportId
   const [selectedFlight, setSelectedFlight] = useState(null); // todo: decide what to use to represent an unique flight
   const [searchBoxIsLoading, setSearchBoxIsLoading] = useState(false); // boolean
-  const [selectedAirportData, setSelectedAirportData] = useState(null); // {...}, the data for the currently selected airport from APIs
+  const [selectedAirportData, setSelectedAirportData] = useState({ name: "ORD", temperature: "70", humidity: "60", wind: "50", forecast: "wind" }); // {...}, the data for the currently selected airport from APIs
 
   useEffect(() => {
     // load data
@@ -53,12 +53,14 @@ const App = () => {
     ]).then(([airports]) => {
       setAirports(airports
         .filter(airport => airport.hasOwnProperty('iata') && airport.iata !== "\\N")
-        .map(obj => ({...obj, color: [
-          '#FEE3EC',
-          '#F2789F'][Math.round(Math.random() * 1)],
-          size: Math.random() * 0.1 + 0.1})
-          ) // Add random color and height
-        );
+        .map(obj => ({
+          ...obj, color: [
+            '#FEE3EC',
+            '#F2789F'][Math.round(Math.random() * 1)],
+          size: Math.random() * 0.1 + 0.1
+        })
+        ) // Add random color and height
+      );
     });
 
   }, []);
