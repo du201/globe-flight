@@ -49,7 +49,7 @@ const App = () => {
       fetch('https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat').then(res => res.text())
         .then(d => d3.csvParseRows(d, airportParse))
     ]).then(([airports]) => {
-      setAirports(airports);
+      setAirports(airports.filter(airport => airport.hasOwnProperty('iata') && airport.iata !== "\\N"));
     });
 
   }, []);
