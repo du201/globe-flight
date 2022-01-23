@@ -41,7 +41,7 @@ const aData = [...Array(M).keys()].map(() => ({
 const App = () => {
   const [airports, setAirports] = useState([]); // [{...}], an array of all the airports
   // In iata
-  const [selectedAirport, setSelectedAirport] = useState("ORD"); // the airportId
+  const [selectedAirport, setSelectedAirport] = useState(null); // the airportId
   const [selectedFlight, setSelectedFlight] = useState(null); // todo: decide what to use to represent an unique flight
   const [searchBoxIsLoading, setSearchBoxIsLoading] = useState(false); // boolean
   const [selectedAirportData, setSelectedAirportData] = useState({ name: "ORD", temperature: "70", humidity: "60", wind: "50", forecast: "wind" }); // {...}, the data for the currently selected airport from APIs
@@ -112,7 +112,7 @@ const App = () => {
     let result = await getAllFlights(IATA, "1c39aabe965d1994225d0b18518c692a", findGeolocationFromIATA);
     // console.log(result);
     // console.log(weatherObj);
-    let finalObj = { ...weatherObj, ...result, name: IATA };
+    let finalObj = { ...weatherObj, ...result, name: `${findAirportNameFromIATA(IATA)} (${IATA})` };
     console.log(finalObj);
     return finalObj;
   }

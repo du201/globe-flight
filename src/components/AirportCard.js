@@ -14,7 +14,7 @@ function AirportCard({ style, selectedAirportData }) {
                     <Card size="small" style={{ backgroundColor: "rgba(0,0,0,0)" }} bordered={false}>
                         <Statistic
                             title="Arrivals"
-                            value={11}
+                            value={selectedAirportData.arr_count}
                             valueStyle={{ color: '#3f8600' }}
                             prefix={<ArrowUpOutlined />}
                         />
@@ -24,7 +24,7 @@ function AirportCard({ style, selectedAirportData }) {
                     <Card size="small" style={{ backgroundColor: "rgba(0,0,0,0)" }} bordered={false}>
                         <Statistic
                             title="Departures"
-                            value={9}
+                            value={selectedAirportData.dep_count}
                             valueStyle={{ color: '#cf1322' }}
                             prefix={<ArrowDownOutlined />}
                         />
@@ -36,7 +36,7 @@ function AirportCard({ style, selectedAirportData }) {
             </p>
             <p>
                 <Text strong>Temperature: </Text>
-                <Text>{selectedAirportData.temperature}</Text>
+                <Text>{selectedAirportData.temperature} F</Text>
             </p>
             <p>
                 <Text strong>Relative Humidity: </Text>

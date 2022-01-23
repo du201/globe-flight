@@ -19,20 +19,6 @@ const SearchBox = ({ onSearchAirport, airports, searchBoxIsLoading, setSearchBox
         }
     };
 
-    /**
-     * callback func when an airport on the map is clicked
-     */
-    const mapClickAirportCB = (IATA) => {
-
-    }
-
-    /**
-     * callback func when an airport on the map is clicked
-     */
-    const mapClickFlightCB = (IATA) => {
-
-    }
-
     let airportsList = airports.length == 0 ? [] : airports
         .filter(airport => airport.hasOwnProperty('iata') && airport.iata !== "\\N")
         .map(airport => `${airport.name} (${airport.iata})`);
@@ -42,7 +28,7 @@ const SearchBox = ({ onSearchAirport, airports, searchBoxIsLoading, setSearchBox
         setAirportsFinalList(airportsList
             .filter(airportName => airportName.toLowerCase().includes(text))
             .map(airportName => ({ value: airportName })));
-        console.log(airportsFinalList);
+        // console.log(airportsFinalList);
     }
 
     return (
