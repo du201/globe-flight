@@ -65,6 +65,7 @@ function FlightGlobe(props) {
         pointLng={props.airportLng}
         pointAltitude={(e) => {
           e.size = !e.size ? 0.01 : e.size;
+          // return !props.selectedAirportIATA ? e.size : e.iata == props.selectedAirportIATA ? 0.1 : e.size;
           return !props.selectedAirportIATA ? e.size : e.iata == props.selectedAirportIATA ? Math.min(e.size * 3, 0.5) : e.size;
           // return !selectedAirport ? e.size : e === selectedAirport ? 0.5 : e.size;
         }}
@@ -86,7 +87,7 @@ function FlightGlobe(props) {
           return `<p class="Globe-Label" style="color:${props.colorTheme.labelColor}">${label}</p>`;
         }}
         onPointClick={(e) => {
-          // console.log(e);
+          console.log(e);
           setPov({
             lat: (e.lat - 20) % 90,
             lng: (e.lng + 20) % 180,

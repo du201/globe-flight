@@ -1,10 +1,9 @@
-import fetch from "node-fetch";
 
 let lat = 33.44
 let lon = -94.04
 let API_key = "d0aee958d23d1df2f26c843b0226be14"
 
-async function getWeather(lat, lon, API_key) {
+export default async function getWeather(lat, lon, API_key) {
     const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={minutely,hourly,daily,alerts}&units=imperial&appid=${API_key}`);
     const data = await response.json()
     console.log(data);
@@ -19,5 +18,3 @@ async function getWeather(lat, lon, API_key) {
     console.log(json);
     return json;
 }
-
-getWeather(lat, lon, API_key);

@@ -6,7 +6,7 @@ import FlightGlobe from './components/FlightGlobe';
 import AirportCard from './components/AirportCard';
 import FlightCard from './components/FlightCard';
 import SearchBox from './components/SearchBox';
-import { getWeather } from './functions/weather';
+import getWeather from './functions/weather';
 import { notification } from 'antd';
 
 const airportParse = ([airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source]) => ({ airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source });
@@ -51,7 +51,14 @@ const App = () => {
       fetch('https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat').then(res => res.text())
         .then(d => d3.csvParseRows(d, airportParse))
     ]).then(([airports]) => {
-      setAirports(airports.filter(airport => airport.hasOwnProperty('iata') && airport.iata !== "\\N"));
+      setAirports(airports
+        .filter(airport => airport.hasOwnProperty('iata') && airport.iata !== "\\N")
+        .map(obj => ({...obj, color: [
+          '#FEE3EC',
+          '#F2789F'][Math.round(Math.random() * 1)],
+          size: Math.random() * 0.1 + 0.1})
+          ) // Add random color and height
+        );
     });
 
   }, []);
@@ -106,10 +113,11 @@ const App = () => {
 
     </SearchBox>
     <FlightGlobe
-      airportData={gData}
+      airportData={airports}
       flightsData={aData}
       setSelectedAirport={onClickAirport}
       selectedAirportIATA={selectedAirport}
+      airportLabel="name"
     >
     </FlightGlobe>
     <AirportCard style={{ width: 300, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: '25px', padding: '10px', position: 'fixed', bottom: 30, left: 30, display: selectedAirport ? 'block' : 'none' }} />
