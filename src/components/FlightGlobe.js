@@ -48,7 +48,7 @@ function FlightGlobe(props) {
     <div className="App">
       <Globe
         ref={globeEl}
-        globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+        // globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
         width={props.size.width}
         // height={Math.round(props.size.height) <= 0 ? props.size.width : props.size.height}
         backgroundColor={props.colorTheme.backgroundColor}
