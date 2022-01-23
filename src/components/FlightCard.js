@@ -13,22 +13,27 @@ function FlightCard(props) {
     // arrival place current time
     return (
         <>
-        <Card 
-            title={props.name}
-            style={{ width: 300 }}
-        >
-            <Row>
-                <Col span={4}>
-                    <p>{props.departure}</p>
-                </Col>
-                <Col>
-                    <ArrowRightOutlined />
-                </Col>
-                <Col span={4}>
-                    <p>{props.arrival}</p>
-                </Col>
-            </Row>
-        </Card>
+        <Card title="United Airlines (UA149)" style={{ width: 400 }}>
+      <p>
+          <Text strong>ORD &#8594; LAX</Text>
+      </p>
+      <p>
+          <Text strong>Status: </Text>
+          <Text>Scheduled</Text>
+      </p>
+      <p>
+          <Text strong>Departure: </Text>
+          <Text>Sunday, 20 Jan 2022 - 18:00</Text>
+      </p>
+      <p>
+          <Text strong>Arrival: </Text>
+          <Text>Monday, 21 Jan 2022 - 2:00</Text>
+      </p>
+      <p>
+          <Text strong>Delay: </Text>
+          <Text>40 min</Text>
+      </p>
+    </Card>
         </>
     );
 }
